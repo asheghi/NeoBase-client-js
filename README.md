@@ -12,10 +12,14 @@ npm i @neobase/client
 
 First get your project name from [NeoBase](https://neobase.ir), if you don't have a project yet, register and create one, it's free!
 
+_note_ make sure to set your access config in NeoBase dashboard and read authentication docs below.
+
+### Actual Usage
+
 ```javascript
 import { getClient } from '@neobase/client'
 
-const client = getClient('your-project-name', { baseurl: 'https://neobase.darkube.app' })
+const client = getClient('your-project-name', { baseurl: 'https://neobase.darkube.app/api' })
 
 //create collection object
 const Todos = client.Collection('todos')
@@ -72,6 +76,45 @@ await Todos.deleteMany({ done: true })
 //delete single document
 await Todos.deleteOne({ _id: 4 })
 ```
+
+### Authentication
+
+NeoBase use JsonWebToken for authentication, after authentication(login/register) a token is returned, save the token and send the token with each request as `x-auth-token` header;
+
+```javascript
+function getToken(){
+    //fetch token
+   return  localStorage.setItem('auth-token', token);
+}
+
+// pass the get token as option
+const client = getClient('name,{..., getToken});
+
+//authenticate
+const { data, status } = await client.Auth.register({
+  email: 'valid@mail.com',
+  password: 'super-secure'
+})
+
+// or login
+const { data, status } = await client.Auth.login({
+  email: 'valid@mail.com',
+  password: 'super-secure'
+})
+
+//get the token
+const { token } = data;
+
+//save your token
+localstorage.setItem('auth-token',token);
+
+// now every request will be authenticated
+// check your session
+const {data,status} = await client.Auth.me()
+
+```
+
+_note_ to check exipration date you can use jwt libraries.
 
 ### Documents
 
