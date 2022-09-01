@@ -70,7 +70,10 @@
     },
     "collectCoverageFrom": [
       "src/*.{js,ts}"
-    ]
+    ],
+    "verbose": false,
+    "silent": true,
+    "forceExit": true
   },
   "prettier": {
     "semi": false,
