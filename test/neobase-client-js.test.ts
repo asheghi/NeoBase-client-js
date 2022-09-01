@@ -12,6 +12,23 @@ const payload = {
   foo: 'bar'
 }
 
+const client = getClient(PROJECT)
+jest.spyOn(client.axiosClient, 'post').mockImplementation(async (url, data, config) => {
+  if (url.endsWith('find')) {
+    return {
+      data: data_list,
+      statusCode: 200
+    }
+  }
+  if (url.endsWith('findOne')) {
+    return {
+      data: data_list[0],
+      statusCode: 200
+    }
+  }
+})
+const axPost = client.axiosClient.post
+
 describe('Client', () => {
   describe('getClient function', () => {
     describe('on invalid arguments', () => {
@@ -37,30 +54,14 @@ describe('Client', () => {
       })
     })
   })
+
   describe('client.Collection', () => {
-    const client = getClient(PROJECT)
     describe('given invalid argument', () => {
       it('should throw', () => {
         // @ts-ignore
         expect(() => client.Collection()).toThrow()
       })
     })
-
-    jest.spyOn(client.axiosClient, 'post').mockImplementation(async (url, data, config) => {
-      if (url.endsWith('find')) {
-        return {
-          data: data_list,
-          statusCode: 200
-        }
-      }
-      if (url.endsWith('findOne')) {
-        return {
-          data: data_list[0],
-          statusCode: 200
-        }
-      }
-    })
-    const axPost = client.axiosClient.post
 
     describe('given collection name', () => {
       it('should return methods object', () => {
@@ -201,6 +202,38 @@ describe('Client', () => {
               )
             })
           })
+        })
+      })
+    })
+  })
+  describe('Client.Auth', () => {
+    describe('login with valid credentials', () => {
+      it('it should call api properly', async () => {
+        await client.Auth.login(payload)
+        expect(axPost).toBeCalledWith(`auth/${PROJECT}/login`, payload)
+      })
+    })
+
+    describe('register with valid credentials', () => {
+      it('it should call api properly', async () => {
+        await client.Auth.register(payload)
+        expect(axPost).toBeCalledWith(`auth/${PROJECT}/register`, payload)
+      })
+    })
+
+    describe('me with valid token', () => {
+      it('it should call api properly', async () => {
+        jest.spyOn(client.axiosClient, 'get').mockImplementation(async (url, config) => {
+          return {
+            data: {
+              user: {}
+            },
+            statusCode: 200
+          }
+        })
+        await client.Auth.me(payload)
+        expect(client.axiosClient.get).toBeCalledWith(`auth/${PROJECT}/me`, {
+          headers: { 'x-auth-token': { foo: 'bar' } }
         })
       })
     })
