@@ -31,6 +31,7 @@ specifiers:
   travis-deploy-once: ^5.0.9
   ts-jest: ^23.10.2
   ts-node: ^7.0.1
+  tslib: ^2.4.0
   tslint: ^5.11.0
   tslint-config-prettier: ^1.15.0
   tslint-config-standard: ^8.0.1
@@ -70,6 +71,7 @@ devDependencies:
   travis-deploy-once: 5.0.11
   ts-jest: 23.10.5_jest@23.6.0
   ts-node: 7.0.1
+  tslib: 2.4.0
   tslint: 5.20.1_typescript@3.9.10
   tslint-config-prettier: 1.18.0
   tslint-config-standard: 8.0.1_67neen4t5xfhpau25dyc5p2yey
@@ -8445,6 +8447,10 @@ packages:
     resolution: {integrity: sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==}
     dev: true
 
+  /tslib/2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
+    dev: true
+
   /tslint-config-prettier/1.18.0:
     resolution: {integrity: sha512-xPw9PgNPLG3iKRxmK7DWr+Ea/SzrvfHtjFt5LBl61gk2UBG/DB9kCXRjv+xyIU1rUtnayLeMUVJBcMX8Z17nDg==}
     engines: {node: '>=4.0.0'}
@@ -8512,7 +8518,7 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     dependencies:
-      tslib: 1.9.0
+      tslib: 1.14.1
       typescript: 3.9.10
     dev: true
 
