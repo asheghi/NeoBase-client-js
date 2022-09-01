@@ -88,7 +88,7 @@ function getToken(){
 }
 
 // pass the get token as option
-const client = getClient('name,{..., getToken});
+const client = getClient('name',{..., getToken});
 
 //authenticate
 const { data, status } = await client.Auth.register({
